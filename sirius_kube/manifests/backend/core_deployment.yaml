@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+        name: backend
+spec:
+        replicas: 3
+        minReadySeconds: 15
+        strategy:
+                type: RollingUpdate
+                rollingUpdate:
+                        maxUnavailable: 1
+                        maxSurge: 1
+
+        template:
+                metadata: 
+                   labels:
+                      app: backend
+                spec:
+                   containers:
+                      - image: thev1/sirius_php:code
+                        imagePullPolicy: Always
+                        name: php
+                        ports:
+                          - containerPort: 80
+                      
+

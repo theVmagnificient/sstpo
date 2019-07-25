@@ -1,0 +1,22 @@
+#username {
+	font-weight: bold;
+	font-size: 30px;
+}
+
+.top {
+	position: absolute;
+	top: 0;
+}
+
+.right {
+	position: absolute;
+	right: 0;
+}
+
+.photo {
+	width: 20%;
+}
+
+#mylist {
+	margin-left: 20px;
+}

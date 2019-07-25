@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:10.1
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: postgres-config
+          volumeMounts:
+            - mountPath: /docker-entrypoint-initdb.d
+              name: pginit
+            - mountPath: /var/lib/postgresql/data
+              name: postgresdb
+
+      volumes:
+         - name: pginit
+           persistentVolumeClaim:
+            claimName: pg-init-volume-claim 
+         - name: postgresdb
+           persistentVolumeClaim:
+            claimName: postgres-pv-claim
+
+
+

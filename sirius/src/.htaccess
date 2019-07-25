@@ -1,0 +1,19 @@
+# Pages with status codes
+ErrorDocument 404 /status-codes/404.php
+ErrorDocument 403 /status-codes/403.php
+
+RewriteEngine on
+
+# Disallow directory view
+Options -Indexes
+
+# Redirect from www.domain.com to http://domain.com
+RewriteCond %{HTTP_HOST} ^www\.
+RewriteRule ^(.*)$ http://%{HTTP_HOST}/$1 [R=301,L]
+
+# Redirect from index.php or index.html to /
+RewriteRule ^(.*)index\.(html|php)$ http://%{HTTP_HOST}/$1 [R=301,L]
+
+# Redirect from favicon to logo
+RewriteRule ^favicon\.png$ /images/logo/logo32x.png [L]
+RewriteRule ^favicon\.ico$ /images/logo/logo32x.ico [L]

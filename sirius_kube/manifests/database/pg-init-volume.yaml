@@ -1,0 +1,32 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+   name: pg-init-volume
+   labels:
+      type: local
+      app: postgres
+spec:
+   storageClassName: manual
+   capacity:
+      storage: 1Mi
+   accessModes:
+      - ReadOnlyMany
+   hostPath:
+      path: /home/v/sirius_kube/app_data/postgres/config/
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pg-init-volume-claim
+  labels:
+    app: postgres
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 1Mi
+

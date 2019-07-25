@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+ apache:
+    #network_mode: host
+   image: thev1/sirius_php:second
+   restart: always
+   ports:
+      - 80:80
+   volumes:
+      - /var/www/bv2019/:/var/www/html
+   depends_on: 
+      - db
+ 
+
+ db:
+   image: postgres:10.1
+   restart: always
+   container_name: postgres-db
+   environment:
+           POSTGRES_DB: bv2019
+           POSTGRES_USER: postgres
+           POSTGRES_PASSWORD: bv2019sstpo
+   ports:
+    - 5432:5432
+   volumes:
+    - ./postgres/config/:/docker-entrypoint-initdb.d/

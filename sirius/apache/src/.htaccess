@@ -1,0 +1,32 @@
+# Pages with status codes
+ErrorDocument 403 /status-codes/403.php
+ErrorDocument 404 /status-codes/404.php
+ErrorDocument 500 /status-codes/500.php
+
+RewriteEngine on
+
+# Disallow directory view
+Options -Indexes
+
+# Redirect from www.domain.com to http://domain.com
+RewriteCond %{HTTP_HOST} ^www\.
+RewriteRule ^(.*)$ http://%{HTTP_HOST}/$1 [R=301,L]
+
+# Redirect from index.php or index.html to /
+RewriteRule ^(.*)index\.(html|php)$ http://%{HTTP_HOST}/$1 [R=301,L]
+
+# 404 instead of 403
+# Simple directories
+RewriteCond %{REQUEST_FILENAME} /images/$ [OR]
+RewriteCond %{REQUEST_FILENAME} /js/$ [OR]
+RewriteCond %{REQUEST_FILENAME} /css/$ [OR]
+RewriteCond %{REQUEST_FILENAME} /api/$ [OR]
+# Restricted directories (include files)
+RewriteCond %{REQUEST_FILENAME} config/(.*)$ [OR]
+# Restricted files (not working...)
+RewriteCond %{REQUEST_FILENAME} htaccess$
+RewriteRule ^ - [R=404,L]
+
+# Redirect from favicon to logo
+RewriteRule ^(.*)favicon\.png$ /images/logo/logo32x.png [L]
+RewriteRule ^(.*)favicon\.ico$ /images/logo/logo32x.ico [L]
